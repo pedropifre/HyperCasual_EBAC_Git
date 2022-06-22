@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class ItemCollactableBase : MonoBehaviour
 {
-
-    [Header("Sounds")]
-    public AudioSource audioSource;
-
     public string compareTag = "Player";
     public float timeToHide=3;
     public GameObject graphicItem;
     public ParticleSystem particleSystem;
+
+    [Header("Sounds")]
+    public AudioSource audioSource;
+
 
     private void Awake()
     {
