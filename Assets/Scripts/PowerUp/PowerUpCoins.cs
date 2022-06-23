@@ -2,20 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PowerUpSpeedUp : PowerUpBase
+public class PowerUpCoins : PowerUpBase
 {
-    [Header("Power up speed up")]
-    public float amountSpeed;
+    [Header("CoinCollector")]
+    public float sizeAmount = 7;
+
     protected override void StartPowerUp()
     {
         base.StartPowerUp();
-        PlayerController.Instance.PowerUpSpeedUp(amountSpeed);
-        PlayerController.Instance.SetPowerUpText("Speed Boost");
+        PlayerController.Instance.ChangeCoinCollectorSize(sizeAmount);
     }
+
     protected override void EndPowerUp()
     {
         base.EndPowerUp();
-        PlayerController.Instance.ResetSpeed();
         PlayerController.Instance.SetPowerUpText("");
+        PlayerController.Instance.ChangeCoinCollectorSize(1);
     }
 }

@@ -2,20 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PowerUpSpeedUp : PowerUpBase
+public class PoweUpInvencible : PowerUpBase
 {
-    [Header("Power up speed up")]
-    public float amountSpeed;
+
     protected override void StartPowerUp()
     {
         base.StartPowerUp();
-        PlayerController.Instance.PowerUpSpeedUp(amountSpeed);
-        PlayerController.Instance.SetPowerUpText("Speed Boost");
+        PlayerController.Instance.SetPowerUpText("Invencible");
+        PlayerController.Instance.SetInvencible();
     }
     protected override void EndPowerUp()
     {
         base.EndPowerUp();
-        PlayerController.Instance.ResetSpeed();
+        PlayerController.Instance.SetInvencible(false);
         PlayerController.Instance.SetPowerUpText("");
     }
 }
