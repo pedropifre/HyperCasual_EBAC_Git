@@ -59,13 +59,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   compareTag: CoinCollector
-  timeToHide: 3
+  timeToHide: 1
   graphicItem: {fileID: 7616611999670145140}
   particleSystem: {fileID: 0}
   audioSource: {fileID: 0}
   collider: {fileID: 7616611998328596926}
   collect: 0
-  lerp: 5
+  lerp: 4.33
+  minDistance: 1.6
 --- !u!1 &7616611999670145140
 GameObject:
   m_ObjectHideFlags: 0
