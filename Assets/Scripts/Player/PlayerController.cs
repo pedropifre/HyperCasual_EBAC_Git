@@ -17,20 +17,23 @@ public class PlayerController : Singleton<PlayerController>
     public Transform target;
     public float lerpSpeed = 1;
 
-
+    //privates
     private bool _canRun;
     private Vector3 _pos;
     private float _currentSpeed;
     private Vector3 _startPosition;
+    private float _baseSpeedToAnimation = 7;
 
     public bool invencible = true;
 
     [Header("text")]
     public TextMeshPro textoPowerUp;
     
-    [Header("text")]
+    [Header("Coin Setup")]
     public GameObject coinCollector;
 
+    [Header("Animation")]
+    public AnimatorManager animatorManager;
 
     private void Start()
     {
@@ -52,29 +55,41 @@ public class PlayerController : Singleton<PlayerController>
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.transform.tag == tagToCheckEnemy)
+            Debug.Log(transform.tag);   
+        if (collision.transform.tag == tagToCheckEnemy && transform.tag == "Player")
         {
-            if (!invencible) EndGame();
+            if (!invencible)
+            {
+                MoveBack(collision.transform);
+                EndGame(AnimatorManager.AnimationType.DEAD);
+            }
         }
+    }
+
+    private void MoveBack(Transform t)
+    {
+        t.DOMoveZ(1f, .3f).SetRelative();
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if(other.transform.tag == tagToCheckEndLine)
         {
-            if(!invencible)EndGame();
+            if(!invencible)EndGame(AnimatorManager.AnimationType.IDLE);
         }
     }
 
-    private void EndGame()
+    private void EndGame(AnimatorManager.AnimationType animationType = AnimatorManager.AnimationType.IDLE)
     {
         _canRun = false;
         endScreen.SetActive(true);
+        animatorManager.Play(animationType);
     }
 
     public void StartToRun()
     {
         _canRun = true;
+        animatorManager.Play(AnimatorManager.AnimationType.RUN, _currentSpeed /_baseSpeedToAnimation);
     }
 
     #region POWERUPS
