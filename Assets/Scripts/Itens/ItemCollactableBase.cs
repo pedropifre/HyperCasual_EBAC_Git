@@ -9,7 +9,7 @@ public class ItemCollactableBase : MonoBehaviour
     public float timeToHide=3;
     public GameObject graphicItem;
     public TextMeshPro graphicText;
-    public ParticleSystem particleSystem;
+    //public ParticleSystem particleSystem;
 
     [Header("Sounds")]
     public AudioSource audioSource;
@@ -46,7 +46,7 @@ public class ItemCollactableBase : MonoBehaviour
     protected virtual void OnCollect() 
     {
 
-        if (particleSystem != null) particleSystem.Play();
+        if (GetComponent<ParticleSystem>() != null) GetComponent<ParticleSystem>().Play();
         if (audioSource != null) audioSource.Play();
         
     }
