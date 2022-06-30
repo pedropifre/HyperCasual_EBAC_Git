@@ -24,9 +24,9 @@ public class LevelManager : MonoBehaviour
 
     private void Awake()
     {
-        //SpawnNextLevel();
+        SpawnNextLevel();
         //StartCoroutine(CreateLevelPiecesCoroutine());
-        CreateLevelPieces();
+        //CreateLevelPieces();
     }
 
     private void SpawnNextLevel()
@@ -42,6 +42,7 @@ public class LevelManager : MonoBehaviour
         }
         _currentLevel = Instantiate(levels[_index], container);
         _currentLevel.transform.localPosition = Vector3.zero;
+        _index++;
     }
 
     private void ResetLevelIndex()
@@ -84,6 +85,8 @@ public class LevelManager : MonoBehaviour
         {
             CreateLevelPiece(_curSetup.LevelPiecesEnd);
         }
+
+        ColorManager.Instance.ChangeColorByType(_curSetup.artType);
     }
 
     private void CreateLevelPiece(List<LevelPieceBase> list)
