@@ -12,6 +12,8 @@ public class PlayerController : Singleton<PlayerController>
     public string tagToCheckEndLine = "EndLine";
 
     public GameObject endScreen;
+    public GameObject telaFinal;
+    public GameObject telaMorte;
 
     [Header("Lerp")]
     public Transform target;
@@ -23,9 +25,11 @@ public class PlayerController : Singleton<PlayerController>
     private float _currentSpeed;
     private Vector3 _startPosition;
     private float _baseSpeedToAnimation = 7;
+    private bool dead = false;
 
     public bool invencible = true;
 
+    public LevelManager levelManager;
     [Header("text")]
     public TextMeshPro textoPowerUp;
     
@@ -61,6 +65,7 @@ public class PlayerController : Singleton<PlayerController>
             if (!invencible)
             {
                 MoveBack(collision.transform);
+                dead = true;
                 EndGame(AnimatorManager.AnimationType.DEAD);
             }
         }
@@ -76,13 +81,28 @@ public class PlayerController : Singleton<PlayerController>
         if(other.transform.tag == tagToCheckEndLine)
         {
             if(!invencible)EndGame(AnimatorManager.AnimationType.IDLE);
+            //levelManager.NextLevel();
         }
     }
 
     private void EndGame(AnimatorManager.AnimationType animationType = AnimatorManager.AnimationType.IDLE)
     {
         _canRun = false;
-        endScreen.SetActive(true);
+        Debug.Log(dead);
+        if (levelManager._index < levelManager.levels.Count && !dead)
+        {
+            endScreen.SetActive(true);
+        }
+        else if (!dead)
+        {
+            telaFinal.SetActive(true);
+        }
+        else
+        {
+            telaMorte.SetActive(true);
+            dead = false;
+        }
+
         animatorManager.Play(animationType);
     }
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class LevelManager : MonoBehaviour
 {
@@ -12,9 +13,11 @@ public class LevelManager : MonoBehaviour
     public List<LevelPieceBasedSetup> levelPieceBasedSetups;
     
     public float timeBetweenPieces = .3f;
+    public GameObject player;
+    public TextMeshProUGUI textLevel;
     
     
-    [SerializeField] private int _index;
+    public int _index;
     private GameObject _currentLevel;
 
     [SerializeField] private List<LevelPieceBase> _spawnedPieces = new List<LevelPieceBase>();
@@ -24,25 +27,52 @@ public class LevelManager : MonoBehaviour
 
     private void Awake()
     {
-        SpawnNextLevel();
+        //SpawnNextLevel();
         //StartCoroutine(CreateLevelPiecesCoroutine());
-        //CreateLevelPieces();
+        CreateLevelPieces();
+        ChangeText();
     }
 
+    public void ChangeText()
+    {
+        var level = _index + 1;
+        textLevel.text = "Level "+level.ToString()+" - 3";
+    }
     private void SpawnNextLevel()
     {
         if (_currentLevel != null)
         {
             Destroy(_currentLevel);
-            _index++;
+            
             if (_index >= levels.Count)
             {
                 ResetLevelIndex();
             }
         }
         _currentLevel = Instantiate(levels[_index], container);
-        _currentLevel.transform.localPosition = Vector3.zero;
+        var transforms = _currentLevel.GetComponentsInChildren<Transform>();
+        foreach (Transform transform in transforms)
+        {
+            if (transform.tag == "Respawn")
+            {
+                player.transform.position = transform.position;
+            }
+        }
         _index++;
+    }
+
+    public void NextLevel()
+    {
+        if (_index >= levels.Count)
+        {
+            //Fim de jogo
+            Debug.Log("Fim de jogo");
+        }
+        else
+        {
+            Debug.Log("Próxima fase");
+            SpawnNextLevel();
+        }
     }
 
     private void ResetLevelIndex()
@@ -52,9 +82,14 @@ public class LevelManager : MonoBehaviour
 
     #region
 
-    private void CreateLevelPieces()
+    public void CreateLevelPieces()
     {
         
+        //aqui
+        if (_index >= levels.Count)
+        {
+            Debug.Log("Acabouuuuu!!!!!");   
+        }
         CleanSpawnedPieces();
 
         if (_curSetup != null)
@@ -87,6 +122,8 @@ public class LevelManager : MonoBehaviour
         }
 
         ColorManager.Instance.ChangeColorByType(_curSetup.artType);
+        player.transform.position = Vector3.zero;
+        ChangeText();
     }
 
     private void CreateLevelPiece(List<LevelPieceBase> list)
