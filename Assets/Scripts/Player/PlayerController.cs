@@ -38,13 +38,20 @@ public class PlayerController : Singleton<PlayerController>
 
     [Header("Animation")]
     public AnimatorManager animatorManager;
+    public float scaleDuration = 1f;
+    public float scaleBounce = 1.2f;
+    public Ease ease = Ease.OutBack;
+
+    [SerializeField] private BouceHelper _bouceHelper;
 
     private void Start()
     {
         ResetSpeed();
         _startPosition = transform.position;
         invencible = false;
+
     }
+
     void Update()
     {
         if (!_canRun) return;
@@ -57,9 +64,25 @@ public class PlayerController : Singleton<PlayerController>
         transform.Translate(transform.forward* _currentSpeed * Time.deltaTime);
     }
 
+    public void ScalePlayer()
+    {
+        transform.localScale = Vector3.zero;
+        transform.DOScale(1, scaleDuration).SetEase(ease);
+
+    }
+
+    public void Bounce()
+    {
+        if (_bouceHelper != null)
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+            _bouceHelper.Bounce();           
+        }
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
-            Debug.Log(transform.tag);   
+        Debug.Log(transform.tag);   
         if (collision.transform.tag == tagToCheckEnemy && transform.tag == "Player")
         {
             if (!invencible)
@@ -69,6 +92,7 @@ public class PlayerController : Singleton<PlayerController>
                 EndGame(AnimatorManager.AnimationType.DEAD);
             }
         }
+        
     }
 
     private void MoveBack(Transform t)
