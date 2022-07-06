@@ -43,6 +43,7 @@ public class PlayerController : Singleton<PlayerController>
     public Ease ease = Ease.OutBack;
 
     [SerializeField] private BouceHelper _bouceHelper;
+    [SerializeField] private ScaleStartPlayer _scaleHelper;
 
     private void Start()
     {
@@ -66,8 +67,12 @@ public class PlayerController : Singleton<PlayerController>
 
     public void ScalePlayer()
     {
-        transform.localScale = Vector3.zero;
-        transform.DOScale(1, scaleDuration).SetEase(ease);
+        
+
+        if (_scaleHelper != null)
+        {
+            _scaleHelper.ScalePlayerInit(transform);
+        }
 
     }
 

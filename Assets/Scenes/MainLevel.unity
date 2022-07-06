@@ -546,7 +546,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 418876865}
-  m_LocalRotation: {x: 0.16396101, y: -0.044552617, z: 0.00741288, w: 0.9854324}
+  m_LocalRotation: {x: 0.16396101, y: -0.044552654, z: 0.0074128862, w: 0.9854324}
   m_LocalPosition: {x: 0.82, y: 3.11, z: -8.190001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -926,7 +926,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.002, y: 1.25}
+  m_AnchoredPosition: {x: 0.002, y: 1.763}
   m_SizeDelta: {x: 1.647, y: 0.5119}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &738740776
@@ -1418,7 +1418,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.16396101, y: -0.044552617, z: 0.00741288, w: 0.9854324}
+  m_LocalRotation: {x: 0.16396101, y: -0.044552654, z: 0.0074128862, w: 0.9854324}
   m_LocalPosition: {x: 0.82, y: 3.11, z: -8.190001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -1922,8 +1922,8 @@ MonoBehaviour:
   _index: 0
   _spawnedPieces: []
   playerController: {fileID: 1660322818}
-  scaleDuration: 0.2
-  scaleBetweenPieces: 0.2
+  scaleDuration: 0.1
+  scaleBetweenPieces: 0.1
   ease: 27
 --- !u!4 &1337897564
 Transform:
@@ -2691,6 +2691,7 @@ GameObject:
   - component: {fileID: 1660322813}
   - component: {fileID: 1660322818}
   - component: {fileID: 1660322812}
+  - component: {fileID: 1660322819}
   m_Layer: 0
   m_Name: PlayerContainer
   m_TagString: Player
@@ -2740,8 +2741,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1.6538197, z: 1}
-  m_Center: {x: 0, y: 0.78694075, z: 0}
+  m_Size: {x: 1, y: 1.4259362, z: 1}
+  m_Center: {x: 0, y: 0.9008825, z: 0}
 --- !u!23 &1660322815
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2837,6 +2838,22 @@ MonoBehaviour:
   scaleBounce: 1.2
   ease: 1
   _bouceHelper: {fileID: 1660322812}
+  _scaleHelper: {fileID: 1660322819}
+--- !u!114 &1660322819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1660322811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 882d1b27816385c49a9ea45dbed50e13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scaleDuration: 2
+  scaleBounce: 1.2
+  ease: 27
 --- !u!1 &1675142619
 GameObject:
   m_ObjectHideFlags: 0
@@ -2943,8 +2960,9 @@ GameObject:
   - component: {fileID: 1766189140}
   - component: {fileID: 1766189142}
   - component: {fileID: 1766189141}
+  - component: {fileID: 1766189143}
   m_Layer: 0
-  m_Name: Cylinder
+  m_Name: BasePlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3013,6 +3031,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1766189139}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1766189143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1766189139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 485ea0fc6cf84304d8af9549e6ecc711, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scaleDuration: 2
+  scaleBounce: 1.2
+  ease: 27
 --- !u!1 &1772995924
 GameObject:
   m_ObjectHideFlags: 0
@@ -3495,8 +3528,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itens: []
-  scaleDuration: 0.02
-  scaleBetweenPieces: 0.02
+  scaleDuration: 0.01
+  scaleBetweenPieces: 0.01
   ease: 27
 --- !u!4 &1988370969
 Transform:

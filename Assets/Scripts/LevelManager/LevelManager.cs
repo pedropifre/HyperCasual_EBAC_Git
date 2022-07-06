@@ -33,7 +33,7 @@ public class LevelManager : MonoBehaviour
 
 
 
-    private void Awake()
+    private void Start()
     {
         //SpawnNextLevel();
         //StartCoroutine(CreateLevelPiecesCoroutine());
@@ -133,9 +133,9 @@ public class LevelManager : MonoBehaviour
         player.transform.position = Vector3.zero;
         ChangeText();
         StartCoroutine(ScalePiecesByTime());
-        playerController.ScalePlayer();
-        Debug.Log("aqui");
-        
+        PlayerController.Instance.ScalePlayer();
+
+
     }
 
     IEnumerator ScalePiecesByTime()
@@ -147,12 +147,13 @@ public class LevelManager : MonoBehaviour
 
         yield return null;
 
-        for(var i = 0 ; i < _spawnedPieces.Count ; i++)
+        for (var i = 0; i < _spawnedPieces.Count; i++)
         {
             _spawnedPieces[i].transform.DOScale(1, scaleDuration).SetEase(ease);
             yield return new WaitForSeconds(scaleBetweenPieces);
+            //Debug.Log("b");
         }
-
+        //Debug.Log("a");
         CoinsAnimationManager.Instance.StartAnimations();
     }
 

@@ -30,6 +30,7 @@ public class CoinsAnimationManager : Singleton<CoinsAnimationManager>
 
     private void Update()
     {
+        
         if (Input.GetKeyDown(KeyCode.T))
         {
             StartAnimations();
@@ -46,8 +47,9 @@ public class CoinsAnimationManager : Singleton<CoinsAnimationManager>
         foreach (var p in itens)
         {
             p.transform.localScale = Vector3.zero;
+
         }
-        Sort();
+         Sort();
 
         yield return null;
 
