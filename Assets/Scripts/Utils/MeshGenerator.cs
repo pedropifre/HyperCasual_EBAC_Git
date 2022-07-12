@@ -8,68 +8,47 @@ public class MeshGenerator : MonoBehaviour
 {
     Mesh mesh;
     public Vector3[] vertices;
-    public Vector3[] vertices3;
+    public List<Vector3> verticesList;
     public int[] triangles;
 
     public GameObject objReference;
-    public List<Vector3> vertices2;
-    // Start is called before the first frame update
+
     void Awake()
     {
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
-
-
-        vertices2.Add(objReference.transform.localPosition);
+        //para não colidir com o objeto inicial
+        //Adicionar o ponto inicial
+        verticesList.Add(objReference.transform.localPosition);
     }
 
-    private void FixedUpdate()
+   
+
+    private void Update()
     {
         Vector3 newVertices = objReference.transform.localPosition;
-        if (Math.Round(newVertices.x,0) != Math.Round(vertices2[vertices2.Count - 1].x,0)
-            && Math.Round(newVertices.z ,0) != Math.Round(vertices2[vertices2.Count - 1].z,0))
+        if (Math.Round(newVertices.x,0) != Math.Round(verticesList[verticesList.Count - 1].x,0)
+            && Math.Round(newVertices.z ,0) != Math.Round(verticesList[verticesList.Count - 1].z,0))
         {
-            vertices2.Add(newVertices);
-        }
-
-        
+            verticesList.Add(newVertices);
             CreateShape();
             UpdateMesh();
-        
+        }
 
-        //Debug.Log("Novo x = " + Math.Round(newVertices.x, 1) + " Antigo x= " + Math.Round(vertices2[vertices2.Count - 1].x, 1));
-        //Debug.Log("Novo y = " + Math.Round(newVertices.y, 1) + " Antigo y= " + Math.Round(vertices2[vertices2.Count - 1].y, 1));
     
-    }
-    private void UpdateMesh()
-    {
-        mesh.Clear();
-
-        mesh.vertices = vertices;
-        mesh.triangles = triangles;
-
-        mesh.RecalculateNormals();
-        //SetCollider();
-    }
-
-     //setting up the collider
-    public void SetCollider()
-    {
-        MeshCollider meshc = gameObject.AddComponent(typeof(MeshCollider)) as MeshCollider;
-        meshc.convex = true;
-        meshc.sharedMesh = mesh;
     }
     private void CreateShape()
     {
-        vertices = new Vector3[vertices2.Count];
-        for (int y = 0; y < vertices2.Count; y++)
+        
+        vertices = new Vector3[verticesList.Count];
+        for (int y = 0; y < verticesList.Count; y++)
         {
-            vertices[y] = vertices2[y];
+            vertices[y] = verticesList[y];
         }
-        int teste = vertices2.Count*3-12;
-        triangles = new int[teste];
+        int teste = verticesList.Count*3-12;
+        if(teste>0)triangles = new int[teste];
         int newVert = 0;
-        for (int y = 0; y < vertices2.Count*3 - 12; y+=3)
+        for (int y = 0; y < verticesList.Count*3 - 12; y+=3)
         {
             if (y == 0)
             {
@@ -87,31 +66,55 @@ public class MeshGenerator : MonoBehaviour
             }
         }
 
-        //triangles = new int[]
-        //{
-        //    0,1,2,
-        //    0,2,3,
-        //    0,3,4,
-        //    0,4,5,
-        //    0,5,6,
-        //    0,6,7,
-        //    0,7,8,
-        //    0,8,9
-        //};
+  
     }
 
-    // Update is called once per frame
+    private void UpdateMesh()
+    {
+        mesh.Clear();
+        mesh.vertices = vertices;
+        mesh.triangles = triangles;
+
+        mesh.RecalculateNormals();
+    }
+
+     //setting up the collider
+    public void SetCollider()
+    {
+        Debug.Log("Criando shape");
+        MeshCollider meshc= new MeshCollider();
+        meshc = gameObject.AddComponent(typeof(MeshCollider)) as MeshCollider;
+        meshc.convex = true;
+        verticesList.Clear();
+        triangles = new int[0];
+        vertices = new Vector3[0];
+        mesh.Clear();
+        verticesList.Add(objReference.transform.localPosition);
+    }
+    
+    IEnumerator Esperar(int sec)
+    {
+        yield return new WaitForSeconds(sec);
+        Destroy(gameObject.GetComponent<MeshCollider>());
+    }
+
+    public void Destruir()
+    {
+        StartCoroutine( Esperar(1));
+       
+
+    }
     private void OnCollisionEnter(Collision collision)
     {
-        
-            Debug.Log(collision.transform.name);
-        
+
+        Debug.Log(collision.transform.name);
+
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        
-            Debug.Log(other.transform.name);
-        
+
+        Debug.Log(other.transform.name);
+
     }
 }

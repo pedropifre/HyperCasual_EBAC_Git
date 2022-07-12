@@ -42,6 +42,12 @@ public class PlayerController : Singleton<PlayerController>
     public float scaleBounce = 1.2f;
     public Ease ease = Ease.OutBack;
 
+    [Header("vfx")]
+    public ParticleSystem vfxDead;
+
+    [Header("Limits")]
+    public float limit = 4.2f;
+
     [SerializeField] private BouceHelper _bouceHelper;
     [SerializeField] private ScaleStartPlayer _scaleHelper;
 
@@ -61,8 +67,11 @@ public class PlayerController : Singleton<PlayerController>
         _pos.y = transform.position.y;
         _pos.z = transform.position.z;
 
+        //if (_pos.x < -limit) _pos.x = -limit - 0.01f;
+        //else if (_pos.x > limit) _pos.x = limit-0.01f;
+
         transform.position = Vector3.Lerp(transform.position, _pos, lerpSpeed * Time.deltaTime);
-        transform.Translate(transform.forward* _currentSpeed * Time.deltaTime);
+        transform.Translate(transform.forward* _currentSpeed * Time.deltaTime,Space.World);
     }
 
     public void ScalePlayer()
@@ -87,7 +96,6 @@ public class PlayerController : Singleton<PlayerController>
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(transform.tag);   
         if (collision.transform.tag == tagToCheckEnemy && transform.tag == "Player")
         {
             if (!invencible)
@@ -128,6 +136,7 @@ public class PlayerController : Singleton<PlayerController>
         }
         else
         {
+            if (vfxDead != null) vfxDead.Play();
             telaMorte.SetActive(true);
             dead = false;
         }

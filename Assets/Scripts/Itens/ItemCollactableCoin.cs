@@ -17,6 +17,7 @@ public class ItemCollactableCoin : ItemCollactableBase
     protected override void OnCollect()
     {
         base.OnCollect();
+        Debug.Log("sdad");
         collider.enabled = false;
         collect = true;
         PlayerController.Instance.Bounce();
