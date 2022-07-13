@@ -25,7 +25,7 @@ public class ItemCollactableBase : MonoBehaviour
         if(collision.transform.CompareTag(compareTag))
         {
             Collect();
-            Debug.Log(collision.name);
+            //Debug.Log(collision.name);
         }
     }
 

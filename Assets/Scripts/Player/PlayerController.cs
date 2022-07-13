@@ -7,7 +7,7 @@ using DG.Tweening;
 
 public class PlayerController : Singleton<PlayerController>
 {
-    public float speed = 1f;
+    public float speed;
     public string tagToCheckEnemy = "Enemy";
     public string tagToCheckEndLine = "EndLine";
 
@@ -46,7 +46,7 @@ public class PlayerController : Singleton<PlayerController>
     public ParticleSystem vfxDead;
 
     [Header("Limits")]
-    public float limit = 4.2f;
+    public float limit = 5f;
 
     [SerializeField] private BouceHelper _bouceHelper;
     [SerializeField] private ScaleStartPlayer _scaleHelper;
@@ -67,8 +67,8 @@ public class PlayerController : Singleton<PlayerController>
         _pos.y = transform.position.y;
         _pos.z = transform.position.z;
 
-        //if (_pos.x < -limit) _pos.x = -limit - 0.01f;
-        //else if (_pos.x > limit) _pos.x = limit-0.01f;
+        if (_pos.x < -limit) _pos.x = -limit;
+        else if (_pos.x > limit) _pos.x = limit;
 
         transform.position = Vector3.Lerp(transform.position, _pos, lerpSpeed * Time.deltaTime);
         transform.Translate(transform.forward* _currentSpeed * Time.deltaTime,Space.World);
@@ -125,7 +125,7 @@ public class PlayerController : Singleton<PlayerController>
     private void EndGame(AnimatorManager.AnimationType animationType = AnimatorManager.AnimationType.IDLE)
     {
         _canRun = false;
-        Debug.Log(dead);
+        //Debug.Log(dead);
         if (levelManager._index < levelManager.levels.Count && !dead)
         {
             endScreen.SetActive(true);
@@ -158,7 +158,7 @@ public class PlayerController : Singleton<PlayerController>
     }
      public void PowerUpSpeedUp(float f)
     {
-        _currentSpeed = f;
+        _currentSpeed += f;
     }
 
     public void SetInvencible(bool b = true)
@@ -167,6 +167,7 @@ public class PlayerController : Singleton<PlayerController>
     }
      public void ResetSpeed()
     {
+        Debug.Log("Speed resetada de "+_currentSpeed+" pra "+speed);
         _currentSpeed = speed;
     }
 

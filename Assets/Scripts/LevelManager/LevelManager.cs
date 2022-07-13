@@ -29,6 +29,7 @@ public class LevelManager : MonoBehaviour
     public float scaleDuration = .2f;
     public float scaleBetweenPieces = .2f;
     public Ease ease = Ease.OutBack;
+    
 
 
 
@@ -39,6 +40,9 @@ public class LevelManager : MonoBehaviour
         //StartCoroutine(CreateLevelPiecesCoroutine());
         CreateLevelPieces();
         ChangeText();
+        PlayerController.Instance.ResetSpeed();
+       
+
     }
 
     public void ChangeText()
@@ -46,6 +50,7 @@ public class LevelManager : MonoBehaviour
         var level = _index + 1;
         textLevel.text = "Level "+level.ToString()+" - 3";
     }
+    
     private void SpawnNextLevel()
     {
         if (_currentLevel != null)
@@ -67,6 +72,7 @@ public class LevelManager : MonoBehaviour
             }
         }
         _index++;
+        PlayerController.Instance.ResetSpeed();
     }
 
     public void NextLevel()
@@ -96,7 +102,7 @@ public class LevelManager : MonoBehaviour
         //aqui
         if (_index >= levels.Count)
         {
-            Debug.Log("Acabouuuuu!!!!!");   
+            CoinsCount.Instance.ChangeTextZerarCoins();
         }
         CleanSpawnedPieces();
 

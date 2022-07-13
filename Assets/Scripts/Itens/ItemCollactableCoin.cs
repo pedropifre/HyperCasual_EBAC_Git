@@ -9,6 +9,7 @@ public class ItemCollactableCoin : ItemCollactableBase
     public bool collect = false;
     public float lerp = 5f;
     public float minDistance = 1f;
+    
 
     private void Start()
     {
@@ -17,10 +18,10 @@ public class ItemCollactableCoin : ItemCollactableBase
     protected override void OnCollect()
     {
         base.OnCollect();
-        Debug.Log("sdad");
         collider.enabled = false;
         collect = true;
         PlayerController.Instance.Bounce();
+        CoinsCount.Instance.ChangeTextCoins(1);
     }
 
     protected override void Collect()
